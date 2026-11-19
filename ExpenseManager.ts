@@ -26,8 +26,19 @@ class ExpenseManager{
         
         if(!categories.includes(category)){
             console.log("This category does not exist")
-            console.log(categories)
             return
+        }
+
+        if(title.trim() === ""){
+            console.log("All fields must be provided")
+            return
+        }
+        if(amount <= 0){
+            console.log("Amount must be greater than zero")
+            return
+        }
+        if(date.trim() === ""){
+            console.log("All fields must be provided")
         }
         
         
@@ -44,7 +55,7 @@ class ExpenseManager{
 
     getExpenses(){
         this.expenses.forEach((expense)=>{
-            console.log(expense)
+            console.log({...expense, category:ExpenseCategory[expense.category]})
         })
     }
 
