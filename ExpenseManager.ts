@@ -18,7 +18,6 @@ interface Expense{
 class ExpenseManager{
     expenses: Expense[] = []
     constructor(){
-
     }
   
     addExpense(id:number, title:string, amount:number,category:string, date: string){
@@ -59,8 +58,18 @@ class ExpenseManager{
         })
     }
 
+    calculateTotalExpenditure(){
+        let accummulator: number = 0
+        this.expenses.forEach((expense)=>{
+            accummulator += expense.amount
+        })
+        console.log(`Total Expenditure - ${accummulator}`)
+    }
+
 }
 
 const ex = new ExpenseManager()
 ex.addExpense(1,"FoodParty",100,"Food","17th November 2026")
+ex.addExpense(1,"FoodParty",200,"Food","17th November 2026")
 ex.getExpenses()
+ex.calculateTotalExpenditure()

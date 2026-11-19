@@ -42,7 +42,16 @@ class ExpenseManager {
             console.log({ ...expense, category: ExpenseCategory[expense.category] });
         });
     }
+    calculateTotalExpenditure() {
+        let accummulator = 0;
+        this.expenses.forEach((expense) => {
+            accummulator += expense.amount;
+        });
+        console.log(`Total Expenditure - ${accummulator}`);
+    }
 }
 const ex = new ExpenseManager();
 ex.addExpense(1, "FoodParty", 100, "Food", "17th November 2026");
+ex.addExpense(1, "FoodParty", 200, "Food", "17th November 2026");
 ex.getExpenses();
+ex.calculateTotalExpenditure();
