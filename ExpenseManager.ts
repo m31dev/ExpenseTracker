@@ -33,7 +33,10 @@ class ExpenseManager{
             console.log("This category does not exist")
             return
         }
-
+        if(id <= 0){
+            console.log("Id must not be negative")
+            return
+        }
         if(title.trim() === ""){
             console.log("All fields must be provided")
             return
@@ -44,6 +47,7 @@ class ExpenseManager{
         }
         if(date.trim() === ""){
             console.log("All fields must be provided")
+            return
         }
         
         
@@ -59,36 +63,61 @@ class ExpenseManager{
     }
 
     getExpenses(){
+         if(this.expenses.length == 0){
+            console.log("There are no expenses")
+            return
+        }
         this.expenses.forEach((expense)=>{
             console.log({...expense, category:ExpenseCategory[expense.category]})
         })
     }
 
-    calculateTotalExpenditure(){
+    calculateTotalExpenditure(): number{
+         if(this.expenses.length == 0){
+            console.log("There are no expenses to calculate")
+            return 0
+        }
         let accummulator: number = 0
         this.expenses.forEach((expense)=>{
             accummulator += expense.amount
         })
-        console.log(`Total Expenditure - ${accummulator}`)
+        return accummulator
     }
 
     filterByCategory(cat: string){
-        const categories: string[] = Object.keys(ExpenseCategory).filter((key)=>{isNaN(Number(key))})
+        let found: boolean = false
+         if(this.expenses.length == 0){
+            console.log("There are no expenses")
+            return
+        }
+        const categories: string[] = Object.keys(ExpenseCategory).filter((key)=>isNaN(Number(key)))
+        if(!categories.includes(cat)){
+            console.log(`Enter a valid category`)
+            return
+        }
         for(let i = 0; i < this.expenses.length; i++){
             if(this.expenses[i].category == ExpenseCategory[cat as keyof typeof ExpenseCategory]){
+                found = true
                 console.log({...this.expenses[i],category:  ExpenseCategory[this.expenses[i].category]})
             }
         }
+        if(!found){
+            console.log(`No expenses in this category`);
+        }
     }
 
-    mostExpensiveExpense(){
+    mostExpensiveExpense(): Expense | undefined {
+        if(this.expenses.length == 0){
+            console.log("There are no expenses")
+            return undefined
+        }
         let mostExpensive: Expense = this.expenses[0]
-        for(let i = 0; i<this.expenses.length; i++){
+        for(let i = 1; i<this.expenses.length; i++){
             if(this.expenses[i].amount > mostExpensive.amount){
                 mostExpensive = this.expenses[i]
             }
         }
-        console.log(`Most Expensive Expense: ${mostExpensive.title}-${mostExpensive.amount}`)
+        return mostExpensive
     }
 
 }
