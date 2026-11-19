@@ -1,0 +1,4 @@
+enum Categories{
+    Food,
+    Transportation
+}
