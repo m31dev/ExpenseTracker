@@ -23,6 +23,12 @@ class ExpenseManager{
     addExpense(id:number, title:string, amount:number,category:string, date: string){
         const categories: string[] = Object.keys(ExpenseCategory).filter((key)=>isNaN(Number(key)))
         
+        for(let i = 0; i<this.expenses.length; i++){
+            if(this.expenses[i].id == id){
+                console.log('An expense with the same ID exists')
+                return
+            }
+        }
         if(!categories.includes(category)){
             console.log("This category does not exist")
             return
@@ -66,10 +72,32 @@ class ExpenseManager{
         console.log(`Total Expenditure - ${accummulator}`)
     }
 
+    filterByCategory(cat: string){
+        const categories: string[] = Object.keys(ExpenseCategory).filter((key)=>{isNaN(Number(key))})
+        for(let i = 0; i < this.expenses.length; i++){
+            if(this.expenses[i].category == ExpenseCategory[cat as keyof typeof ExpenseCategory]){
+                console.log({...this.expenses[i],category:  ExpenseCategory[this.expenses[i].category]})
+            }
+        }
+    }
+
+    mostExpensiveExpense(){
+        let mostExpensive: Expense = this.expenses[0]
+        for(let i = 0; i<this.expenses.length; i++){
+            if(this.expenses[i].amount > mostExpensive.amount){
+                mostExpensive = this.expenses[i]
+            }
+        }
+        console.log(`Most Expensive Expense: ${mostExpensive.title}-${mostExpensive.amount}`)
+    }
+
 }
 
 const ex = new ExpenseManager()
 ex.addExpense(1,"FoodParty",100,"Food","17th November 2026")
 ex.addExpense(1,"FoodParty",200,"Food","17th November 2026")
+ex.addExpense(2,"FoodPartyFufu",300,"Food","17th November 2026")
 ex.getExpenses()
 ex.calculateTotalExpenditure()
+ex.filterByCategory("Food")
+ex.mostExpensiveExpense()
