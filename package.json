@@ -1,7 +1,7 @@
 {
+  "type": "module",
   "devDependencies": {
     "@types/node": "^26.6.6",
-    "tsc": "^2.0.4",
     "typescript": "^7.0.2"
   }
 }
