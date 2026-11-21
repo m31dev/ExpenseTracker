@@ -1,4 +1,10 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const readline = require("node:readline");
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 var ExpenseCategory;
 (function (ExpenseCategory) {
     ExpenseCategory[ExpenseCategory["Food"] = 0] = "Food";
@@ -47,6 +53,7 @@ class ExpenseManager {
             date,
         };
         this.expenses.push(newExpense);
+        console.log("Expense successfully added");
     }
     getExpenses() {
         if (this.expenses.length == 0) {
@@ -104,10 +111,46 @@ class ExpenseManager {
     }
 }
 const ex = new ExpenseManager();
-ex.addExpense(1, "FoodParty", 100, "Food", "17th November 2026");
-ex.addExpense(1, "FoodParty", 200, "Food", "17th November 2026");
-ex.addExpense(2, "FoodPartyFufu", 300, "Food", "17th November 2026");
-ex.getExpenses();
-ex.calculateTotalExpenditure();
-ex.filterByCategory("Food");
-ex.mostExpensiveExpense();
+/*ex.addExpense(1,"FoodParty",100,"Food","17th November 2026")
+ex.addExpense(1,"FoodParty",200,"Food","17th November 2026")
+ex.addExpense(2,"FoodPartyFufu",300,"Food","17th November 2026")
+ex.getExpenses()
+ex.calculateTotalExpenditure()
+ex.filterByCategory("Food")
+ex.mostExpensiveExpense()*/
+rl.question(`
+    SPENDWISE - PERSONAL EXPENSE MANAGER
+
+    1. Add an expense
+    2. View all expenses
+    3. Calculate total expenditure
+    4. Filter expenses by category
+    5. Find most expensive expense
+    6. Exit
+
+    Enter your choice:
+    `, (choice) => {
+    switch (Number(choice)) {
+        case 1:
+            getExpenseDetails();
+            break;
+        case 2:
+            ex.getExpenses();
+            break;
+        case 3:
+    }
+});
+function getExpenseDetails() {
+    rl.question(`Enter expense ID`, (ID) => {
+        rl.question(`Enter title`, (title) => {
+            rl.question(`Enter amount`, (amount) => {
+                rl.question(`Enter category`, (category) => {
+                    rl.question(`Enter date`, (date) => {
+                        ex.addExpense(Number(ID), title, Number(amount), category, date);
+                    });
+                });
+            });
+        });
+    });
+}
+//# sourceMappingURL=ExpenseManager.js.map
